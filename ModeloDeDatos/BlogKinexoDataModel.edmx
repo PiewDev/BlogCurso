@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="blogkinexoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Notas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Titulo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cuerpo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Autor" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="FechaBaja" Type="datetime" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NotasTags">
+          <Key>
+            <PropertyRef Name="tagsId" />
+            <PropertyRef Name="notasId" />
+          </Key>
+          <Property Name="tagsId" Type="int" Nullable="false" />
+          <Property Name="notasId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Notas_NotasTags">
+          <End Role="Notas" Type="Self.Notas" Multiplicity="1" />
+          <End Role="NotasTags" Type="Self.NotasTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="NotasTags">
+              <PropertyRef Name="notasId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tags_NotasTags">
+          <End Role="Tags" Type="Self.Tags" Multiplicity="1" />
+          <End Role="NotasTags" Type="Self.NotasTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotasTags">
+              <PropertyRef Name="tagsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="blogkinexoModelStoreContainer">
+          <EntitySet Name="Notas" EntityType="Self.Notas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotasTags" EntityType="Self.NotasTags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Notas_NotasTags" Association="Self.FK_Notas_NotasTags">
+            <End Role="Notas" EntitySet="Notas" />
+            <End Role="NotasTags" EntitySet="NotasTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tags_NotasTags" Association="Self.FK_Tags_NotasTags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="NotasTags" EntitySet="NotasTags" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="blogkinexoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Notas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cuerpo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Autor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaBaja" Type="DateTime" Precision="3" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Tags" Relationship="Self.NotasTags" FromRole="Notas" ToRole="Tags" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Notas" Relationship="Self.NotasTags" FromRole="Tags" ToRole="Notas" />
+        </EntityType>
+        <Association Name="NotasTags">
+          <End Role="Notas" Type="Self.Notas" Multiplicity="*" />
+          <End Role="Tags" Type="Self.Tags" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="blogkinexoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Notas" EntityType="Self.Notas" />
+          <EntitySet Name="Tags" EntityType="Self.Tags" />
+          <AssociationSet Name="NotasTags" Association="Self.NotasTags">
+            <End Role="Notas" EntitySet="Notas" />
+            <End Role="Tags" EntitySet="Tags" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="blogkinexoModelStoreContainer" CdmEntityContainer="blogkinexoEntities">
+          <EntitySetMapping Name="Notas">
+            <EntityTypeMapping TypeName="blogkinexoModel.Notas">
+              <MappingFragment StoreEntitySet="Notas">
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Cuerpo" ColumnName="Cuerpo" />
+                <ScalarProperty Name="Autor" ColumnName="Autor" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="blogkinexoModel.Tags">
+              <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="NotasTags" TypeName="blogkinexoModel.NotasTags" StoreEntitySet="NotasTags">
+            <EndProperty Name="Notas">
+              <ScalarProperty Name="id" ColumnName="notasId" />
+            </EndProperty>
+            <EndProperty Name="Tags">
+              <ScalarProperty Name="Id" ColumnName="tagsId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
