@@ -27,5 +27,6 @@ namespace ModeloDeDatos
     
         public virtual DbSet<Notas> Notas { get; set; }
         public virtual DbSet<Tags> Tags { get; set; }
+        public virtual DbSet<Categorias> Categorias { get; set; }
     }
 }

@@ -5,9 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="blogkinexoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Notas">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="Titulo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Cuerpo" Type="nvarchar(max)" Nullable="false" />
@@ -15,8 +24,18 @@
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="FechaModificacion" Type="datetime" />
           <Property Name="FechaBaja" Type="datetime" />
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'blogkinexo.dbo.NotasCategorias' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="NotasCategorias">
+          <Key>
+            <PropertyRef Name="CategoriasId" />
+            <PropertyRef Name="NotasId" />
+          </Key>
+          <Property Name="CategoriasId" Type="int" Nullable="false" />
+          <Property Name="NotasId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="NotasTags">
           <Key>
@@ -32,16 +51,41 @@
           </Key>
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Notas_NotasTags">
           <End Role="Notas" Type="Self.Notas" Multiplicity="1" />
           <End Role="NotasTags" Type="Self.NotasTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Notas">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="NotasTags">
               <PropertyRef Name="notasId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotasCategorias_Categorias">
+          <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
+          <End Role="NotasCategorias" Type="Self.NotasCategorias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotasCategorias">
+              <PropertyRef Name="CategoriasId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotasCategorias_Notas">
+          <End Role="Notas" Type="Self.Notas" Multiplicity="1" />
+          <End Role="NotasCategorias" Type="Self.NotasCategorias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotasCategorias">
+              <PropertyRef Name="NotasId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -58,12 +102,27 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="blogkinexoModelStoreContainer">
+          <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notas" EntityType="Self.Notas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NotasTags" EntityType="Self.NotasTags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotasCategorias" EntityType="Self.NotasCategorias" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [NotasCategorias].[CategoriasId] AS [CategoriasId], 
+    [NotasCategorias].[NotasId] AS [NotasId]
+    FROM [dbo].[NotasCategorias] AS [NotasCategorias]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Notas_NotasTags" Association="Self.FK_Notas_NotasTags">
             <End Role="Notas" EntitySet="Notas" />
             <End Role="NotasTags" EntitySet="NotasTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotasCategorias_Categorias" Association="Self.FK_NotasCategorias_Categorias">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="NotasCategorias" EntitySet="NotasCategorias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotasCategorias_Notas" Association="Self.FK_NotasCategorias_Notas">
+            <End Role="Notas" EntitySet="Notas" />
+            <End Role="NotasCategorias" EntitySet="NotasCategorias" />
           </AssociationSet>
           <AssociationSet Name="FK_Tags_NotasTags" Association="Self.FK_Tags_NotasTags">
             <End Role="Tags" EntitySet="Tags" />
@@ -77,6 +136,7 @@
         <EntityType Name="Notas">
           <Key>
             <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Cuerpo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -87,6 +147,8 @@
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Tags" Relationship="Self.NotasTags" FromRole="Notas" ToRole="Tags" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Categorias" Relationship="blogkinexoModel.NotasCategorias" FromRole="Notas" ToRole="Categorias" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
@@ -95,6 +157,7 @@
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Notas" Relationship="Self.NotasTags" FromRole="Tags" ToRole="Notas" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="NotasTags">
           <End Role="Notas" Type="Self.Notas" Multiplicity="*" />
@@ -107,7 +170,34 @@
             <End Role="Notas" EntitySet="Notas" />
             <End Role="Tags" EntitySet="Tags" />
           </AssociationSet>
+          <AssociationSet Name="NotasTags1" Association="blogkinexoModel.NotasTags1">
+            <End Role="Notas" EntitySet="Notas" />
+            <End Role="Tags" EntitySet="Tags" />
+          </AssociationSet>
+          <EntitySet Name="Categorias" EntityType="blogkinexoModel.Categorias" />
+          <AssociationSet Name="NotasCategorias" Association="blogkinexoModel.NotasCategorias">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Notas" EntitySet="Notas" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="NotasTags1">
+          <End Type="blogkinexoModel.Notas" Role="Notas" Multiplicity="*" />
+          <End Type="blogkinexoModel.Tags" Role="Tags" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Notas" Relationship="blogkinexoModel.NotasCategorias" FromRole="Categorias" ToRole="Notas" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="NotasCategorias">
+          <End Type="blogkinexoModel.Categorias" Role="Categorias" Multiplicity="*" />
+          <End Type="blogkinexoModel.Notas" Role="Notas" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -117,6 +207,7 @@
           <EntitySetMapping Name="Notas">
             <EntityTypeMapping TypeName="blogkinexoModel.Notas">
               <MappingFragment StoreEntitySet="Notas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="Cuerpo" ColumnName="Cuerpo" />
                 <ScalarProperty Name="Autor" ColumnName="Autor" />
@@ -124,13 +215,13 @@
                 <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
                 <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tags">
             <EntityTypeMapping TypeName="blogkinexoModel.Tags">
               <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -142,6 +233,32 @@
             </EndProperty>
             <EndProperty Name="Tags">
               <ScalarProperty Name="Id" ColumnName="tagsId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="NotasTags1" TypeName="blogkinexoModel.NotasTags1" StoreEntitySet="NotasTags">
+            <EndProperty Name="Tags">
+              <ScalarProperty Name="Id" ColumnName="tagsId" />
+            </EndProperty>
+            <EndProperty Name="Notas">
+              <ScalarProperty Name="Id" ColumnName="notasId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Categorias">
+            <EntityTypeMapping TypeName="blogkinexoModel.Categorias">
+              <MappingFragment StoreEntitySet="Categorias">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="NotasCategorias" TypeName="blogkinexoModel.NotasCategorias" StoreEntitySet="NotasCategorias">
+            <EndProperty Name="Notas">
+              <ScalarProperty Name="Id" ColumnName="NotasId" />
+            </EndProperty>
+            <EndProperty Name="Categorias">
+              <ScalarProperty Name="Id" ColumnName="CategoriasId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

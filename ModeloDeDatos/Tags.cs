@@ -22,6 +22,7 @@ namespace ModeloDeDatos
     
         public string Nombre { get; set; }
         public int Id { get; set; }
+        public bool Estado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Notas> Notas { get; set; }
