@@ -1,0 +1,14 @@
+D:\CursoKinexo\BlogCurso\ModeloDeDatos\obj\Debug\ModeloDeDatos.csprojAssemblyReference.cache
+D:\CursoKinexo\BlogCurso\ModeloDeDatos\obj\Debug\ModeloDeDatos.csproj.CoreCompileInputs.cache
+D:\CursoKinexo\BlogCurso\ModeloDeDatos\bin\Debug\ModeloDeDatos.dll.config
+D:\CursoKinexo\BlogCurso\ModeloDeDatos\bin\Debug\ModeloDeDatos.dll
+D:\CursoKinexo\BlogCurso\ModeloDeDatos\bin\Debug\ModeloDeDatos.pdb
+D:\CursoKinexo\BlogCurso\ModeloDeDatos\bin\Debug\EntityFramework.dll
+D:\CursoKinexo\BlogCurso\ModeloDeDatos\bin\Debug\EntityFramework.SqlServer.dll
+D:\CursoKinexo\BlogCurso\ModeloDeDatos\bin\Debug\EntityFramework.xml
+D:\CursoKinexo\BlogCurso\ModeloDeDatos\bin\Debug\EntityFramework.SqlServer.xml
+D:\CursoKinexo\BlogCurso\ModeloDeDatos\bin\Debug\es\EntityFramework.resources.dll
+D:\CursoKinexo\BlogCurso\ModeloDeDatos\bin\Debug\es\EntityFramework.SqlServer.resources.dll
+D:\CursoKinexo\BlogCurso\ModeloDeDatos\obj\Debug\ModeloDeDatos.csproj.CopyComplete
+D:\CursoKinexo\BlogCurso\ModeloDeDatos\obj\Debug\ModeloDeDatos.dll
+D:\CursoKinexo\BlogCurso\ModeloDeDatos\obj\Debug\ModeloDeDatos.pdb

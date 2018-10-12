@@ -1,0 +1,13 @@
+D:\CursoKinexo\BlogCurso\ClassLibrary1\obj\Debug\ModeloDeNegocio.csprojAssemblyReference.cache
+D:\CursoKinexo\BlogCurso\ClassLibrary1\obj\Debug\ModeloDeNegocio.csproj.CoreCompileInputs.cache
+D:\CursoKinexo\BlogCurso\ClassLibrary1\bin\Debug\ModeloDeNegocio.dll
+D:\CursoKinexo\BlogCurso\ClassLibrary1\bin\Debug\ModeloDeNegocio.pdb
+D:\CursoKinexo\BlogCurso\ClassLibrary1\bin\Debug\ModeloDeDatos.dll
+D:\CursoKinexo\BlogCurso\ClassLibrary1\bin\Debug\EntityFramework.dll
+D:\CursoKinexo\BlogCurso\ClassLibrary1\bin\Debug\ModeloDeDatos.pdb
+D:\CursoKinexo\BlogCurso\ClassLibrary1\bin\Debug\ModeloDeDatos.dll.config
+D:\CursoKinexo\BlogCurso\ClassLibrary1\bin\Debug\EntityFramework.xml
+D:\CursoKinexo\BlogCurso\ClassLibrary1\bin\Debug\es\EntityFramework.resources.dll
+D:\CursoKinexo\BlogCurso\ClassLibrary1\obj\Debug\ModeloDeNegocio.csproj.CopyComplete
+D:\CursoKinexo\BlogCurso\ClassLibrary1\obj\Debug\ModeloDeNegocio.dll
+D:\CursoKinexo\BlogCurso\ClassLibrary1\obj\Debug\ModeloDeNegocio.pdb

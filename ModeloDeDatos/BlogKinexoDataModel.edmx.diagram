@@ -8,7 +8,6 @@
         <EntityTypeShape EntityType="blogkinexoModel.Notas" Width="2.125" PointX="5.375" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="blogkinexoModel.Tags" Width="1.5" PointX="1.875" PointY="2.25" IsExpanded="true" />
         <AssociationConnector Association="blogkinexoModel.NotasTags" ManuallyRouted="false" />
-        <AssociationConnector Association="blogkinexoModel.NotasTags1" />
         <EntityTypeShape EntityType="blogkinexoModel.Categorias" Width="1.5" PointX="8.125" PointY="2.5" />
         <AssociationConnector Association="blogkinexoModel.NotasCategorias" />
       </Diagram>

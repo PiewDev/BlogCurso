@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using CapaDeServicios;
+
 
 namespace Blog
 {
@@ -16,6 +18,10 @@ namespace Blog
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            var Servicio = new Servicios();
+            Servicio.Start();
+
         }
     }
 }

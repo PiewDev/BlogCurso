@@ -28,7 +28,6 @@ namespace ModeloDeDatos
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public Nullable<System.DateTime> FechaBaja { get; set; }
         public bool Estado { get; set; }
-        public int id { get; set; }
         public int Id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

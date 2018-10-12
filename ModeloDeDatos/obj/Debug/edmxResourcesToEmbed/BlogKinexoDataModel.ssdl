@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="blogkinexoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Categorias">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Estado" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Notas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Titulo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Cuerpo" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Autor" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="FechaModificacion" Type="datetime" />
+    <Property Name="FechaBaja" Type="datetime" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Estado" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'blogkinexo.dbo.NotasCategorias' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="NotasCategorias">
+    <Key>
+      <PropertyRef Name="CategoriasId" />
+      <PropertyRef Name="NotasId" />
+    </Key>
+    <Property Name="CategoriasId" Type="int" Nullable="false" />
+    <Property Name="NotasId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NotasTags">
+    <Key>
+      <PropertyRef Name="tagsId" />
+      <PropertyRef Name="notasId" />
+    </Key>
+    <Property Name="tagsId" Type="int" Nullable="false" />
+    <Property Name="notasId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tags">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Estado" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Notas_NotasTags">
+    <End Role="Notas" Type="Self.Notas" Multiplicity="1" />
+    <End Role="NotasTags" Type="Self.NotasTags" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Notas">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NotasTags">
+        <PropertyRef Name="notasId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NotasCategorias_Categorias">
+    <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
+    <End Role="NotasCategorias" Type="Self.NotasCategorias" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorias">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NotasCategorias">
+        <PropertyRef Name="CategoriasId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NotasCategorias_Notas">
+    <End Role="Notas" Type="Self.Notas" Multiplicity="1" />
+    <End Role="NotasCategorias" Type="Self.NotasCategorias" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Notas">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NotasCategorias">
+        <PropertyRef Name="NotasId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tags_NotasTags">
+    <End Role="Tags" Type="Self.Tags" Multiplicity="1" />
+    <End Role="NotasTags" Type="Self.NotasTags" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tags">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NotasTags">
+        <PropertyRef Name="tagsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="blogkinexoModelStoreContainer">
+    <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Notas" EntityType="Self.Notas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NotasTags" EntityType="Self.NotasTags" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NotasCategorias" EntityType="Self.NotasCategorias" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [NotasCategorias].[CategoriasId] AS [CategoriasId], 
+    [NotasCategorias].[NotasId] AS [NotasId]
+    FROM [dbo].[NotasCategorias] AS [NotasCategorias]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Notas_NotasTags" Association="Self.FK_Notas_NotasTags">
+      <End Role="Notas" EntitySet="Notas" />
+      <End Role="NotasTags" EntitySet="NotasTags" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NotasCategorias_Categorias" Association="Self.FK_NotasCategorias_Categorias">
+      <End Role="Categorias" EntitySet="Categorias" />
+      <End Role="NotasCategorias" EntitySet="NotasCategorias" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NotasCategorias_Notas" Association="Self.FK_NotasCategorias_Notas">
+      <End Role="Notas" EntitySet="Notas" />
+      <End Role="NotasCategorias" EntitySet="NotasCategorias" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tags_NotasTags" Association="Self.FK_Tags_NotasTags">
+      <End Role="Tags" EntitySet="Tags" />
+      <End Role="NotasTags" EntitySet="NotasTags" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -135,7 +135,6 @@ advertencia 6002: La tabla o vista 'blogkinexo.dbo.NotasCategorias' no tiene def
       <Schema Namespace="blogkinexoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Notas">
           <Key>
-            <PropertyRef Name="id" />
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -145,7 +144,6 @@ advertencia 6002: La tabla o vista 'blogkinexo.dbo.NotasCategorias' no tiene def
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="FechaBaja" Type="DateTime" Precision="3" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Tags" Relationship="Self.NotasTags" FromRole="Notas" ToRole="Tags" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Categorias" Relationship="blogkinexoModel.NotasCategorias" FromRole="Notas" ToRole="Categorias" />
@@ -170,20 +168,12 @@ advertencia 6002: La tabla o vista 'blogkinexo.dbo.NotasCategorias' no tiene def
             <End Role="Notas" EntitySet="Notas" />
             <End Role="Tags" EntitySet="Tags" />
           </AssociationSet>
-          <AssociationSet Name="NotasTags1" Association="blogkinexoModel.NotasTags1">
-            <End Role="Notas" EntitySet="Notas" />
-            <End Role="Tags" EntitySet="Tags" />
-          </AssociationSet>
           <EntitySet Name="Categorias" EntityType="blogkinexoModel.Categorias" />
           <AssociationSet Name="NotasCategorias" Association="blogkinexoModel.NotasCategorias">
             <End Role="Categorias" EntitySet="Categorias" />
             <End Role="Notas" EntitySet="Notas" />
           </AssociationSet>
         </EntityContainer>
-        <Association Name="NotasTags1">
-          <End Type="blogkinexoModel.Notas" Role="Notas" Multiplicity="*" />
-          <End Type="blogkinexoModel.Tags" Role="Tags" Multiplicity="*" />
-        </Association>
         <EntityType Name="Categorias">
           <Key>
             <PropertyRef Name="Id" />
@@ -228,19 +218,8 @@ advertencia 6002: La tabla o vista 'blogkinexo.dbo.NotasCategorias' no tiene def
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="NotasTags" TypeName="blogkinexoModel.NotasTags" StoreEntitySet="NotasTags">
-            <EndProperty Name="Notas">
-              <ScalarProperty Name="id" ColumnName="notasId" />
-            </EndProperty>
             <EndProperty Name="Tags">
               <ScalarProperty Name="Id" ColumnName="tagsId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="NotasTags1" TypeName="blogkinexoModel.NotasTags1" StoreEntitySet="NotasTags">
-            <EndProperty Name="Tags">
-              <ScalarProperty Name="Id" ColumnName="tagsId" />
-            </EndProperty>
-            <EndProperty Name="Notas">
-              <ScalarProperty Name="Id" ColumnName="notasId" />
             </EndProperty>
           </AssociationSetMapping>
           <EntitySetMapping Name="Categorias">
