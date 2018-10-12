@@ -29,9 +29,15 @@ namespace CapaDeServicios
             container.Register<ConveridorColecciones<Categoria>, ToICategoriasFromCategorias<Categoria>>(Lifestyle.Singleton);
             container.Register<ConveridorColecciones<Categorias>, ToCategoriasFromICategorias>(Lifestyle.Singleton);
 
+            container.Register<IFactoryDatos<INotas>, FactoryNota>(Lifestyle.Singleton);
+            container.Register<IFactoryDatos<ICategorias>, FactoryCategoria>(Lifestyle.Singleton);
+            container.Register<IFactoryDatos<ITags>, FactoryTag>(Lifestyle.Singleton);
+
             container.Register<ICrud<ICategorias>, CategoriasDAO>(Lifestyle.Singleton);
             container.Register<ICrud<ITags>, TagsDAO>(Lifestyle.Singleton);
             container.Register<ICrud<INotas>, NotasDAO>(Lifestyle.Singleton);
+
+       
 
             container.RegisterMvcControllers(System.Reflection.Assembly.GetExecutingAssembly());
             container.RegisterMvcIntegratedFilterProvider();

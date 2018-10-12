@@ -10,13 +10,13 @@ namespace ModeloDeDatos
     
     public class TagsDAO : ICrud<ITags>
     {
-        private ITagsFactory Factory;
-        private ConveridorColecciones<Notas> Converter;
+        private IFactoryDatos<ITags> Factory;
+        
 
         //CONSTRUCTOR
-        public TagsDAO(ITagsFactory Factory, ConveridorColecciones<Notas> Converter)
+        public TagsDAO(IFactoryDatos<ITags> Factory)
         {
-            this.Converter = Converter;
+            
             this.Factory = Factory;
         }
 
@@ -26,7 +26,8 @@ namespace ModeloDeDatos
             blogkinexoEntities contexto = new blogkinexoEntities();
             Tags nuevaTag = new Tags()
             {
-                Nombre = Modelo.Nombre
+                Nombre = Modelo.Nombre,
+                Estado = Modelo.Estado,                
                 
             };
 
@@ -41,7 +42,7 @@ namespace ModeloDeDatos
             blogkinexoEntities contexto = new blogkinexoEntities();
             var tag = contexto.Tags.Where(x => x.Id == Modelo.Id).FirstOrDefault();
             tag.Nombre = Modelo.Nombre;
-            tag.Notas = Converter.Convertir(Modelo.Notas);
+            
            
             contexto.SaveChanges();
             return Modelo.Id;
@@ -63,11 +64,10 @@ namespace ModeloDeDatos
 
             foreach (var tag in results)
             {
-                var nuevatag = this.Factory.NuevaTag();
+                var nuevatag = this.Factory.NuevaInstancia();
                 nuevatag.Id = tag.Id;
                 nuevatag.Nombre = tag.Nombre;
                 nuevatag.Estado = tag.Estado;
-                nuevatag.Notas = Converter.Convertir(tag.Notas.ToList()).Cast<INotas>().ToList();
                 tagsInt.Add(nuevatag);
             }
 

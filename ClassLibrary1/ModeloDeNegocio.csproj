@@ -51,6 +51,9 @@
     <Compile Include="Convertidores\ToITagsFromTags.cs" />
     <Compile Include="Convertidores\ToNotasFromINotas.cs" />
     <Compile Include="Convertidores\ToTagsFromITags.cs" />
+    <Compile Include="Factorys\FactoryCategoria.cs" />
+    <Compile Include="Factorys\FactoryTag.cs" />
+    <Compile Include="Factorys\FactoryNota.cs" />
     <Compile Include="Interfaces\IABM.cs" />
     <Compile Include="Nota.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

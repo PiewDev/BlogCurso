@@ -71,12 +71,10 @@
     <Compile Include="DAOs\CategoriasDAO.cs" />
     <Compile Include="Convertidores\ConveridorColecciones.cs" />
     <Compile Include="DAOs\NotasDAO.cs" />
-    <Compile Include="Interfaces\ITagsFactory.cs" />
     <Compile Include="Interfaces\ITags.cs" />
-    <Compile Include="Interfaces\INotasFactory.cs" />
     <Compile Include="Interfaces\INotas.cs" />
     <Compile Include="Interfaces\ICategorias.cs" />
-    <Compile Include="Interfaces\ICategoriasFactory.cs" />
+    <Compile Include="Interfaces\IFactory.cs" />
     <Compile Include="Interfaces\ICrud.cs" />
     <Compile Include="Notas.cs">
       <DependentUpon>BlogKinexoDataModel.tt</DependentUpon>

@@ -10,13 +10,13 @@ namespace ModeloDeDatos
     
     public class NotasDAO: ICrud<INotas>
     {
-        private INotasFactory Factory;
+        private IFactoryDatos<INotas> Factory;
         private ConveridorColecciones<Tags> TagConverter;
         private ConveridorColecciones<Categorias> CategoriaConverter;
 
 
         //CONSTRUCTOR
-        public NotasDAO(INotasFactory Factory, ConveridorColecciones<Tags> TagConverter, ConveridorColecciones<Categorias> CategoriaConverter)
+        public NotasDAO(IFactoryDatos<INotas> Factory, ConveridorColecciones<Tags> TagConverter, ConveridorColecciones<Categorias> CategoriaConverter)
         {
             this.Factory = Factory;
             this.CategoriaConverter = CategoriaConverter;
@@ -77,7 +77,7 @@ namespace ModeloDeDatos
 
             foreach (var nota in results)
             {
-                var nuevaNota = this.Factory.NuevaNota();
+                var nuevaNota = this.Factory.NuevaInstancia();
                 nuevaNota.Autor = nota.Autor;
                 nuevaNota.Cuerpo = nota.Cuerpo;
                 nuevaNota.FechaCreacion = nota.FechaCreacion;

@@ -6,20 +6,18 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 
 namespace ModeloDeDatos
-{   
+{
     public class CategoriasDAO : ICrud<ICategorias>
-    {       
-        private ICategoriasFactory Factory;
-        private ConveridorColecciones<Notas> Converter;
+    {
+        private IFactoryDatos<ICategorias> Factory;
+        
 
         //CONSTRUCTOR
-        public CategoriasDAO(ICategoriasFactory Factory, ConveridorColecciones<Notas> Converter)
+        public CategoriasDAO(IFactoryDatos<ICategorias> Factory)
         {
             this.Factory = Factory;
-            this.Converter = Converter;
+            
         }
-
-        
 
         public int Crear(ICategorias Modelo)
         {
@@ -28,8 +26,8 @@ namespace ModeloDeDatos
             {
                 Descripcion = Modelo.Descripcion,
                 Estado = true,
-                Nombre = Modelo.Nombre,
-                Notas =this.Converter.Convertir(Modelo.Notas)
+                Nombre = Modelo.Nombre,               
+                
 
             };
 
@@ -45,7 +43,6 @@ namespace ModeloDeDatos
             var categoria = contexto.Categorias.Where(x => x.Id == Modelo.Id).FirstOrDefault();
             categoria.Descripcion = Modelo.Descripcion;
             categoria.Nombre = Modelo.Nombre;
-            categoria.Notas = this.Converter.Convertir(Modelo.Notas);
             contexto.SaveChanges();
             return Modelo.Id;
         }
@@ -66,12 +63,12 @@ namespace ModeloDeDatos
 
             foreach (var nota in results)
             {
-                var nuevaCategoria = Factory.NuevaCategoria();
+                var nuevaCategoria = Factory.NuevaInstancia();
                 nuevaCategoria.Descripcion = nota.Descripcion;
                 nuevaCategoria.Estado = nota.Estado;
                 nuevaCategoria.Id = nota.Id;
                 nuevaCategoria.Nombre = nota.Nombre;
-                nuevaCategoria.Notas = this.Converter.Convertir(nota.Notas.ToList()).Cast<INotas>().ToList();
+                
 
                categoriasInt.Add(nuevaCategoria);
             }

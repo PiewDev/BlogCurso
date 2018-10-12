@@ -10,13 +10,7 @@ namespace ModeloDeNegocio
     
     public class ToTagsFromITags : ConveridorColecciones<Tags>
     {
-        private ConveridorColecciones<Notas> Converter;
-
-        public ToTagsFromITags(ConveridorColecciones<Notas> Converter)
-        {
-            this.Converter = Converter;
-
-        }
+        
 
         public override void MapearInstancia(Tags to, object from)
         {
@@ -26,7 +20,7 @@ namespace ModeloDeNegocio
             to.Estado = ftags.Estado;
             to.Id = ftags.Id;
             to.Nombre = ftags.Nombre;
-            to.Notas = this.Converter.Convertir(ftags.Notas);
+            
         }
     }
 }
